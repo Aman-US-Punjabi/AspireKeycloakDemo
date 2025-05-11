@@ -1,0 +1,49 @@
+# Build artifacts
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Dotnet specific
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Blazor specific
+wwwroot/css/app.css
+wwwroot/css/app.min.css
+wwwroot/js/app.js
+wwwroot/js/app.min.js
+
+# Dependency directories
+node_modules/
+bower_components/
+
+# Environment files
+.env
+.env.*
+
+# Publish output
+wwwroot/
+
+# Backup files
+*.bak
+*.swp
+*.tmp
+*.temp
