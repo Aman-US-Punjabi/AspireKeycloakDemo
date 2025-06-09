@@ -16,6 +16,18 @@ var webApp = builder.AddProject<Projects.BlazorApp>("BlazorApp", launchProfileNa
     .WithReference(keycloak)
     .WaitFor(keycloak);
 
+// Adding BlazorwebIndividualAccount Project
+var webAppWithIndividualAccount = builder.AddProject<Projects.BlazorWebIndividualAccountAuth>("BlazorWebIndividualAccountAuth", launchProfileName)
+    .WithExternalHttpEndpoints()
+    .WithReference(keycloak)
+    .WaitFor(keycloak);
+
+// Adding BlazorwebAssemblyIndividualAccount Project
+var webAssembly = builder.AddProject<Projects.BlazorWebAssemblyIndAccAuth>("BlazorWebAssemblyIndAccAuth", launchProfileName)
+    .WithExternalHttpEndpoints()
+    .WithReference(keycloak)
+    .WaitFor(keycloak);
+
 // Wire up the callback urls (self reference)
 // webApp.WithEnvironment("CallBackUrl", webApp.GetEndpoint("http").ToString());
 

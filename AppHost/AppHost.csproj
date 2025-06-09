@@ -11,12 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.2.1" />
-    <PackageReference Include="Aspire.Hosting.Keycloak" Version="9.2.1-preview.1.25222.1" />
+    <PackageReference Include="Aspire.Hosting.AppHost" Version="9.3.0" />
+    <PackageReference Include="Aspire.Hosting.Keycloak" Version="9.3.0-preview.1.25265.20" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="../BlazorApp/BlazorApp.csproj" />
+    <ProjectReference Include="../BlazorWebAssemblyIndAccAuth/BlazorWebAssemblyIndAccAuth.csproj" />
+    <ProjectReference Include="../BlazorWebIndividualAccountAuth/BlazorWebIndividualAccountAuth.csproj" />
   </ItemGroup>
 
 </Project>
