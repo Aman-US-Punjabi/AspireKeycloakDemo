@@ -1,7 +1,9 @@
 ﻿@page "/counter"
 
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
 @using Microsoft.AspNetCore.Authorization
-@attribute [Authorize]
 
 <PageTitle>Counter</PageTitle>
 
@@ -10,6 +12,51 @@
 <p role="status">Current count: @currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<AuthorizeView Roles="user">
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="weather">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Welcome user Role
+        </NavLink>
+    </div>
+</AuthorizeView>
+
+<AuthorizeView Roles="admin">
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="weather">
+            <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Welcome Admin Role
+        </NavLink>
+    </div>
+</AuthorizeView>
+
+<AuthorizeView>
+    <Authorized Context="auth">
+        <div>
+            <h3>User Claims</h3>
+            <ul>
+                <li><strong>Name:</strong> @auth.User.Identity?.Name</li>
+                <li><strong>Email:</strong> @auth.User.FindFirst(ClaimTypes.Email)?.Value</li>
+                <li><strong>Role:</strong> @auth.User.FindFirst(ClaimTypes.Role)?.Value</li>
+            </ul>
+
+        </div>
+        <div>
+            <h4>All Claims:</h4>
+            <ul>
+                @foreach (var claim in auth.User.Claims)
+            {
+                @* @if (claim.Type == "role" || claim.Type == "realm_access" || claim.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")
+                { *@
+                    <li>@claim.Type - @claim.Value</li>
+                @* } *@
+            }
+            </ul>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p>You are not authorized to view user claims.</p>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
     private int currentCount = 0;

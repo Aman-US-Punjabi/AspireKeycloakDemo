@@ -328,6 +328,7 @@
         }
       ],
       "security-admin-console": [],
+      "web-api": [],
       "admin-cli": [],
       "testclient": [],
       "account-console": [],
@@ -433,7 +434,35 @@
       "frontend": []
     }
   },
-  "groups": [],
+  "groups": [
+    {
+      "id": "a9ca302f-0494-493e-ab1a-8dbaf2c2d8f5",
+      "name": "admins",
+      "path": "/admins",
+      "subGroups": [],
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {}
+    },
+    {
+      "id": "34c9969e-08a4-4f4d-b9f8-e3d242c8c11e",
+      "name": "manager",
+      "path": "/manager",
+      "subGroups": [],
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {}
+    },
+    {
+      "id": "981e9b99-b576-4229-9d18-f5120570671e",
+      "name": "users",
+      "path": "/users",
+      "subGroups": [],
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {}
+    }
+  ],
   "defaultRole": {
     "id": "fcf216bf-7e36-46f3-8de4-863b29cfcca3",
     "name": "default-roles-CustomRealmName",
@@ -739,6 +768,23 @@
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "id": "d4e0c297-2437-4bb1-a88a-bfabcde936d6",
+          "name": "realm roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-realm-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "foo",
+            "introspection.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "realm_access.roles",
+            "jsonType.label": "String",
+            "multivalued": "true"
+          }
+        }
+      ],
       "defaultClientScopes": [
         "web-origins",
         "acr",
@@ -945,6 +991,61 @@
         "offline_access",
         "microprofile-jwt"
       ]
+    },
+    {
+      "id": "e6c060ba-9d02-4055-ac3e-d38ef24e6a3e",
+      "clientId": "web-api",
+      "name": "client_web-api",
+      "description": "",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "/*"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "realm_client": "false",
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "standard.token.exchange.enabled": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "organization",
+        "offline_access",
+        "microprofile-jwt"
+      ]
     }
   ],
   "clientScopes": [
@@ -966,12 +1067,15 @@
           "protocolMapper": "oidc-usermodel-realm-role-mapper",
           "consentRequired": false,
           "config": {
-            "user.attribute": "foo",
             "introspection.token.claim": "true",
+            "multivalued": "true",
+            "userinfo.token.claim": "true",
+            "user.attribute": "foo",
+            "id.token.claim": "true",
+            "lightweight.claim": "false",
             "access.token.claim": "true",
-            "claim.name": "realm_access.roles",
-            "jsonType.label": "String",
-            "multivalued": "true"
+            "claim.name": "role",
+            "jsonType.label": "String"
           }
         },
         {
@@ -1101,8 +1205,10 @@
       "description": "SAML role list",
       "protocol": "saml",
       "attributes": {
-        "consent.screen.text": "${samlRoleListScopeConsentText}",
-        "display.on.consent.screen": "true"
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "true",
+        "gui.order": "",
+        "consent.screen.text": "${samlRoleListScopeConsentText}"
       },
       "protocolMappers": [
         {
@@ -1635,14 +1741,14 @@
     }
   ],
   "defaultDefaultClientScopes": [
-    "role_list",
     "saml_organization",
     "profile",
     "email",
     "roles",
     "web-origins",
     "acr",
-    "basic"
+    "basic",
+    "role_list"
   ],
   "defaultOptionalClientScopes": [
     "offline_access",
